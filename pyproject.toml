@@ -8,6 +8,7 @@ packages = [{include = "test_streamlit"}]
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11,!=3.9.7"
 streamlit = "^1.15.0"
+opencv-python = ">=4.1"
 #brevettiai = {path="../core", extras = ["cv2"]}
 #onnx = "1.12.0"
 #mopsus = {path = "../cervello/python/mopsus"}
