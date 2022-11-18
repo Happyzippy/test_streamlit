@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "test-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Emil Tyge <emil@brevetti.ai>"]
+packages = [{include = "test_streamlit"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11,!=3.9.7"
+streamlit = "^1.15.0"
+#brevettiai = {path="../core", extras = ["cv2"]}
+#onnx = "1.12.0"
+#mopsus = {path = "../cervello/python/mopsus"}
+#streamlit-webrtc = "^0.44.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
