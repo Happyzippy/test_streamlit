@@ -1,42 +1,22 @@
 """Video transforms with OpenCV"""
-import threading
-import av
-#import cv2
+
 import streamlit as st
-from streamlit_webrtc import WebRtcMode, webrtc_streamer
-import time
+from brevettiai.platform import PlatformAPI
 
-lock = threading.Lock()
-img_container = {"img": None}
+with st.form(key="platform-login"):
+    user = st.text_input("User")
+    password = st.text_input("Enter a password", type="password")
+    st.form_submit_button("Login")
 
-def callback(frame: av.VideoFrame) -> av.VideoFrame:
-    img = frame.to_ndarray(format="rgb24")
-    with lock:
-        img_container["img"] = img
-    return av.VideoFrame.from_ndarray(img, format="rgb24")
+web = PlatformAPI(username=user, password=password)
 
+datasets = list(sorted(filter(lambda d: not d.locked, web.get_dataset()), key=lambda d: d.created, reverse=True))[:5]
+datasets = {k.name: k for k in datasets}
+dataset_name = st.selectbox("Datasets", options=datasets.keys())
 
-streamer = webrtc_streamer(
-    key="opencv-filter",
-    mode=WebRtcMode.SENDRECV,
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    media_stream_constraints={
-        "video": {
-            "width": {"min": 800, "ideal": 1920, "max": 1920},
-        },
-        "audio": False
-    },
-    video_frame_callback=callback,
-    async_processing=True,
-)
+dataset = datasets[dataset_name]
 
-capture_button = st.button("Take image")
-st.file_uploader("Upload")
-while capture_button and streamer.state.playing:
-    with lock:
-        img = img_container["img"]
-        if img is not None:
-            print(img.shape)
-            st.image(img)
-            break
-    time.sleep(0.1)
+file = st.file_uploader("Upload")
+if file:
+    dataset.resolve_access_rights()
+    dataset.io.write_file(dataset.get_location("", file.name), file)
