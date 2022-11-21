@@ -10,10 +10,10 @@ lock = threading.Lock()
 img_container = {"img": None}
 
 def callback(frame: av.VideoFrame) -> av.VideoFrame:
-    img = frame.to_ndarray(format="bgr24")
+    img = frame.to_ndarray(format="rgb24")
     with lock:
         img_container["img"] = img
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
+    return av.VideoFrame.from_ndarray(img, format="rgb24")
 
 
 streamer = webrtc_streamer(
@@ -28,12 +28,6 @@ streamer = webrtc_streamer(
     },
     video_frame_callback=callback,
     async_processing=True,
-)
-
-st.markdown(
-    "This demo is based on "
-    "https://github.com/aiortc/aiortc/blob/2362e6d1f0c730a0f8c387bbea76546775ad2fe8/examples/server/server.py#L34. "  # noqa: E501
-    "Many thanks to the project."
 )
 
 capture_button = st.button("Take image")
