@@ -23,10 +23,10 @@ streamer = webrtc_streamer(
     media_stream_constraints={
         "video": {
             "width": {"min": 800, "ideal": 1920, "max": 1920},
-        }
+        },
+        "audio": False
     },
     video_frame_callback=callback,
-    media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
 )
 
