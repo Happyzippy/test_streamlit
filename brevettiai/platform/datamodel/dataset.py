@@ -58,6 +58,7 @@ class Dataset(BaseModel):
     def io(self):
         assert self._io is not None, "Remember to call start_job()"
         return self._io
+
     def resolve_access_rights(self):
         self.io.resolve_access_rights(path=self.bucket, resource_id=self.id, resource_type="dataset", mode='w')
 
