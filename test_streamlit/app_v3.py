@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import threading
 from brevettiai.platform import PlatformAPI
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, WebRtcMode
 import av
 
 lock = threading.Lock()
@@ -28,13 +28,18 @@ def video_frame_callback(frame):
     with lock:
         img_container["img"] = img
     frame = av.VideoFrame.from_ndarray(img.mean(-1).astype(np.uint8), format="gray8")
-    return frame
+    #return frame
 
+#st.camera_input("Take a picture")
+st.file_uploader("TEST")
 
+quit()
 streamer = webrtc_streamer(
     key="example",
-    video_frame_callback=None,
-    # video_frame_callback=video_frame_callback,
+    #video_frame_callback=None,
+    mode=WebRtcMode.RECVONLY,
+    media_stream_constraints={"video": True},
+    video_frame_callback=video_frame_callback,
     # desired_playing_state=True,
     # media_stream_constraints={
     #     "video": {
