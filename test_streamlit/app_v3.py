@@ -22,6 +22,7 @@ if False:
 
 camera_info = st.empty()
 
+
 def video_frame_callback(frame):
     img = frame.to_ndarray(format="rgb24")
     with lock:
@@ -30,25 +31,28 @@ def video_frame_callback(frame):
     return frame
 
 
-streamer = webrtc_streamer(key="example", video_frame_callback=video_frame_callback,
-                desired_playing_state=True,
-                media_stream_constraints={
-                    "video": {
-                        "width": {"min": 800, "ideal": 1920, "max": 1920},
-                    }
-                },
-                )
+streamer = webrtc_streamer(
+    key="example",
+    video_frame_callback=None,
+    # video_frame_callback=video_frame_callback,
+    # desired_playing_state=True,
+    # media_stream_constraints={
+    #     "video": {
+    #         "width": {"min": 800, "ideal": 1920, "max": 1920},
+    #     }
+    # },
+)
 
-capture_button = st.button("Take image")
-
-while capture_button and streamer.state.playing:
-    with lock:
-        img = img_container["img"]
-        if img is not None:
-            print(img.shape)
-            st.image(img)
-            break
-    time.sleep(0.1)
+# capture_button = st.button("Take image")
+#
+# while capture_button and streamer.state.playing:
+#     with lock:
+#         img = img_container["img"]
+#         if img is not None:
+#             print(img.shape)
+#             st.image(img)
+#             break
+#     time.sleep(0.1)
 
 
 #
