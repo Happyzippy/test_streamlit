@@ -3,11 +3,18 @@ name = "test-streamlit"
 version = "0.1.0"
 description = ""
 authors = ["Emil Tyge <emil@brevetti.ai>"]
-packages = [{include = "test_streamlit"}]
+packages = [{include = "test_streamlit"}, {include = "brevettiai"}]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11,!=3.9.7"
 streamlit = "^1.15.0"
+
+pydantic = "^1.10.2"
+#boto3 = "^1.24"
+minio = ">=7.0,<7.1"
+backoff = ">=1.10"
+
+#brevettiai = "^0.6.8"
 #brevettiai = {path="../core", extras = ["cv2"]}
 #onnx = "1.12.0"
 #mopsus = {path = "../cervello/python/mopsus"}

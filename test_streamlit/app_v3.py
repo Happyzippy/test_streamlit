@@ -1,6 +1,13 @@
 import streamlit as st
 import numpy as np
 import cv2
+from brevettiai.platform import PlatformAPI
+
+user = st.text_input("User")
+password = st.text_input("Enter a password", type="password")
+
+web = PlatformAPI(username=user, password=password)
+dataset = st.selectbox("Datasets", options=[x.name for x in web.get_dataset()[:5]])
 
 img_file_buffer = st.camera_input("Take a picture")
 
