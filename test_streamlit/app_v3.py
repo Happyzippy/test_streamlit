@@ -20,6 +20,11 @@ streamer = webrtc_streamer(
     key="opencv-filter",
     mode=WebRtcMode.SENDRECV,
     rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+    media_stream_constraints={
+        "video": {
+            "width": {"min": 800, "ideal": 1920, "max": 1920},
+        }
+    },
     video_frame_callback=callback,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
