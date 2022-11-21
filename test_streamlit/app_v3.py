@@ -31,7 +31,7 @@ streamer = webrtc_streamer(
 )
 
 capture_button = st.button("Take image")
-
+st.file_uploader("Upload")
 while capture_button and streamer.state.playing:
     with lock:
         img = img_container["img"]
