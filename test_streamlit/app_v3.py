@@ -11,6 +11,8 @@ img_container = {"img": None}
 
 def callback(frame: av.VideoFrame) -> av.VideoFrame:
     img = frame.to_ndarray(format="bgr24")
+    with lock:
+        img_container["img"] = img
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 
